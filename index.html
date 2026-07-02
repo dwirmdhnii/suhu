@@ -287,7 +287,7 @@
   </div>
 
   <div class="heading">
-    <div class="eyebrow">Live Sensor · Rumah</div>
+    <div class="eyebrow"></div>
     <h1>Monitoring <span>Ruangan</span></h1>
   </div>
 
@@ -295,7 +295,7 @@
 
     <div class="card temp">
       <div class="card-top">
-        <span class="card-label">Suhu Udara</span>
+        <span class="card-label">Suhu</span>
         <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#ffa94d" stroke-width="1.6">
           <path d="M12 3a2 2 0 0 0-2 2v9.17a3.5 3.5 0 1 0 4 0V5a2 2 0 0 0-2-2Z" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="12" cy="17" r="1.6" fill="#ffa94d"/>
@@ -321,7 +321,6 @@
 
       <div class="card-foot">
         <span id="tempStatusTag" class="tag temp-tag">Menunggu data</span>
-        <span id="tempTime">--:--:--</span>
       </div>
     </div>
 
@@ -352,16 +351,9 @@
 
       <div class="card-foot">
         <span id="humStatusTag" class="tag hum-tag">Menunggu data</span>
-        <span id="humTime">--:--:--</span>
       </div>
     </div>
 
-  </div>
-
-  <div class="meta">
-    <span>Broker: <b>broker.emqx.io</b></span>
-    <span>Topic: <b>rumah/sensor/data</b></span>
-    <span>Update terakhir: <b id="lastUpdate">belum ada</b></span>
   </div>
 
 </div>
@@ -442,7 +434,7 @@
   });
 
   client.on("connect", () => {
-    setStatus('on', 'Terhubung · MQTT Live');
+    setStatus('on', 'Terhubung');
     client.subscribe(topic);
   });
 
