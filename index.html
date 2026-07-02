@@ -1,97 +1,154 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Suhu & Kelembapan</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: #f0f4f8;
-        }
-        .card {
-            background: white;
-            max-width: 350px;
-            margin: 20px auto;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .value {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .label {
-            font-size: 1.2em;
-            color: #555;
-        }
-        .status {
-            margin-top: 20px;
-            color: #888;
-            font-size: 0.9em;
-        }
-        .connected { color: green; }
-        .disconnected { color: red; }
-    </style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dashboard Suhu</title>
+
+<style>
+
+body{
+    background:#eef3f8;
+    font-family:Arial;
+    text-align:center;
+}
+
+.card{
+
+    width:300px;
+
+    margin:20px auto;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.2);
+
+}
+
+.value{
+
+    font-size:60px;
+
+    font-weight:bold;
+
+}
+
+.connected{
+
+    color:green;
+
+}
+
+.disconnected{
+
+    color:red;
+
+}
+
+</style>
+
 </head>
+
 <body>
-    <h1>Monitoring Ruangan</h1>
-    <div class="card">
-        <div class="label">Suhu</div>
-        <div class="value" id="suhu">--</div>
-        <div style="font-size:1.2em;">°C</div>
-    </div>
-    <div class="card">
-        <div class="label">Kelembapan</div>
-        <div class="value" id="kelembapan">--</div>
-        <div style="font-size:1.2em;">%</div>
-    </div>
-    <div class="status" id="status"> Menghubungkan ke MQTT...</div>
 
-    <!-- Library MQTT over WebSocket -->
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-    <script>
-        // === KONFIGURASI ===
-        const brokerUrl = 'wss://broker.hivemq.com:8000/mqtt'; // WebSocket Secure[reference:4]
-        const topic = 'rumah/sensor/data';
+<h1>Monitoring Ruangan</h1>
 
-        // === KONEKSI KE BROKER ===
-        const client = mqtt.connect(brokerUrl);
+<div class="card">
 
-        client.on('connect', function () {
-            document.getElementById('status').innerHTML = 'Terhubung ke broker';
-            document.getElementById('status').className = 'status connected';
-            client.subscribe(topic, function (err) {
-                if (!err) {
-                    console.log('Subscribe ke topik: ' + topic);
-                }
-            });
-        });
+<h2>Suhu</h2>
 
-        client.on('message', function (topic, message) {
-            try {
-                const data = JSON.parse(message.toString());
-                document.getElementById('suhu').textContent = data.suhu;
-                document.getElementById('kelembapan').textContent = data.kelembapan;
-                document.getElementById('status').innerHTML = 'Data terakhir: ' + new Date().toLocaleTimeString();
-                document.getElementById('status').className = 'status connected';
-            } catch (e) {
-                console.log('Gagal parse data:', e);
-            }
-        });
+<div id="suhu" class="value">--</div>
 
-        client.on('error', function (err) {
-            document.getElementById('status').innerHTML = 'Error: ' + err.message;
-            document.getElementById('status').className = 'status disconnected';
-        });
+°C
 
-        client.on('offline', function () {
-            document.getElementById('status').innerHTML = 'Koneksi terputus';
-            document.getElementById('status').className = 'status disconnected';
-        });
-    </script>
+</div>
+
+<div class="card">
+
+<h2>Kelembapan</h2>
+
+<div id="kelembapan" class="value">--</div>
+
+%
+
+</div>
+
+<h3 id="status">Menghubungkan MQTT...</h3>
+
+<script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
+
+<script>
+
+const broker="wss://broker.emqx.io:8084/mqtt";
+
+const topic="rumah/sensor/data";
+
+const client=mqtt.connect(broker,{
+
+    reconnectPeriod:3000,
+
+    connectTimeout:10000
+
+});
+
+client.on("connect",()=>{
+
+    console.log("CONNECTED");
+
+    status.innerHTML="Terhubung";
+
+    status.className="connected";
+
+    client.subscribe(topic);
+
+});
+
+client.on("message",(topic,message)=>{
+
+    let data=JSON.parse(message.toString());
+
+    document.getElementById("suhu").innerHTML=data.suhu;
+
+    document.getElementById("kelembapan").innerHTML=data.kelembapan;
+
+});
+
+client.on("reconnect",()=>{
+
+    status.innerHTML="Reconnect...";
+
+    status.className="disconnected";
+
+});
+
+client.on("offline",()=>{
+
+    status.innerHTML="Offline";
+
+    status.className="disconnected";
+
+});
+
+client.on("error",(err)=>{
+
+    console.log(err);
+
+    status.innerHTML="Error MQTT";
+
+    status.className="disconnected";
+
+});
+
+</script>
+
 </body>
+
 </html>
