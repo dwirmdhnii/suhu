@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monitoring Ruangan</title>
+<title>Monitoring Ruangan · Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -45,17 +45,8 @@
     transition: background 1.6s ease;
   }
 
-  /* drifting atmospheric orbs — signature ambient layer */
-  .sky{
-    position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
-  }
-  .orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(2px);
-    opacity:0.55;
-    mix-blend-mode:screen;
-  }
+  .sky{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .orb{ position:absolute; border-radius:50%; filter:blur(2px); opacity:0.55; mix-blend-mode:screen; }
   .orb.o1{
     width:420px;height:420px; top:-120px; left:-100px;
     background:radial-gradient(circle at 35% 35%, var(--heat), transparent 70%);
@@ -72,20 +63,10 @@
     opacity:0.06;
     animation:driftC 20s ease-in-out infinite;
   }
-  @keyframes driftA{
-    0%,100%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(60px,50px) scale(1.12);}
-  }
-  @keyframes driftB{
-    0%,100%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(-50px,-40px) scale(1.08);}
-  }
-  @keyframes driftC{
-    0%,100%{transform:translate(0,0);}
-    50%{transform:translate(-30px,40px);}
-  }
+  @keyframes driftA{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(60px,50px) scale(1.12);} }
+  @keyframes driftB{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-50px,-40px) scale(1.08);} }
+  @keyframes driftC{ 0%,100%{transform:translate(0,0);} 50%{transform:translate(-30px,40px);} }
 
-  /* twinkling star grain */
   .grain{
     position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.5;
     background-image:radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.5), transparent),
@@ -99,10 +80,7 @@
 
   .wrap{ position:relative; z-index:1; width:100%; max-width:920px; }
 
-  /* status pill */
-  .status-row{
-    display:flex; justify-content:center; margin-bottom:28px;
-  }
+  .status-row{ display:flex; justify-content:center; margin-bottom:28px; }
   .status-pill{
     display:inline-flex; align-items:center; gap:10px;
     padding:9px 18px 9px 14px;
@@ -117,15 +95,8 @@
     color:var(--text-dim);
     transition:color .4s ease;
   }
-  .dot{
-    width:8px; height:8px; border-radius:50%;
-    background:var(--bad);
-    box-shadow:0 0 0 0 rgba(255,107,107,.6);
-  }
-  .status-pill.on .dot{
-    background:var(--good);
-    animation:pulse 1.8s ease-in-out infinite;
-  }
+  .dot{ width:8px; height:8px; border-radius:50%; background:var(--bad); box-shadow:0 0 0 0 rgba(255,107,107,.6); }
+  .status-pill.on .dot{ background:var(--good); animation:pulse 1.8s ease-in-out infinite; }
   .status-pill.on{ color:#c9f5df; }
   .status-pill.warn .dot{ background:#ffd166; }
   .status-pill.warn{ color:#ffe8b0; }
@@ -135,16 +106,7 @@
     100%{box-shadow:0 0 0 0 rgba(94,227,163,0);}
   }
 
-  /* heading */
   .heading{ text-align:center; margin-bottom:44px; }
-  .eyebrow{
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:var(--text-dim);
-    margin-bottom:10px;
-  }
   h1{
     font-family:'Outfit',sans-serif;
     font-weight:700;
@@ -158,12 +120,7 @@
     color:transparent;
   }
 
-  /* cards */
-  .cards{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:22px;
-  }
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
   @media (max-width:640px){ .cards{ grid-template-columns:1fr; } }
 
   .card{
@@ -187,10 +144,7 @@
   .card.temp{ --accent-glow:rgba(255,169,77,0.35); }
   .card.hum{ --accent-glow:rgba(87,217,232,0.35); }
 
-  .card-top{
-    display:flex; justify-content:space-between; align-items:flex-start;
-    margin-bottom:18px;
-  }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
   .card-label{
     font-family:'Space Mono',monospace;
     font-size:12px;
@@ -200,11 +154,7 @@
   }
   .card-icon{ width:26px; height:26px; opacity:.85; }
 
-  .gauge-area{
-    display:flex; align-items:center; justify-content:center;
-    position:relative;
-    margin:6px 0 18px;
-  }
+  .gauge-area{ display:flex; align-items:center; justify-content:center; position:relative; margin:6px 0 18px; }
   svg.gauge{ width:190px; height:190px; transform:rotate(-90deg); }
   .track{ fill:none; stroke:rgba(255,255,255,0.08); stroke-width:10; }
   .fill{
@@ -215,10 +165,7 @@
   .fill.temp-fill{ stroke:url(#gradTemp); }
   .fill.hum-fill{ stroke:url(#gradHum); }
 
-  .gauge-value{
-    position:absolute; inset:0;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-  }
+  .gauge-value{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .value{
     font-family:'Outfit',sans-serif;
     font-weight:800;
@@ -227,15 +174,10 @@
     letter-spacing:-.02em;
     font-variant-numeric:tabular-nums;
   }
-  .unit{
-    font-family:'Space Mono',monospace;
-    font-size:13px;
-    color:var(--text-dim);
-    margin-top:6px;
-  }
+  .unit{ font-family:'Space Mono',monospace; font-size:13px; color:var(--text-dim); margin-top:6px; }
 
   .card-foot{
-    display:flex; justify-content:space-between; align-items:center;
+    display:flex; justify-content:center; align-items:center;
     font-family:'Space Mono',monospace;
     font-size:11.5px;
     color:var(--text-dim);
@@ -243,24 +185,9 @@
     border-top:1px solid rgba(255,255,255,0.08);
     padding-top:14px;
   }
-  .tag{
-    padding:3px 9px;
-    border-radius:999px;
-    background:rgba(255,255,255,0.06);
-  }
+  .tag{ padding:3px 9px; border-radius:999px; background:rgba(255,255,255,0.06); }
   .tag.temp-tag{ color:var(--heat); }
   .tag.hum-tag{ color:var(--cool); }
-
-  /* footer meta */
-  .meta{
-    margin-top:32px;
-    display:flex; justify-content:center; gap:22px; flex-wrap:wrap;
-    font-family:'Space Mono',monospace;
-    font-size:11.5px;
-    color:var(--text-dim);
-    letter-spacing:.04em;
-  }
-  .meta b{ color:var(--text-main); font-weight:600; }
 
   @media (prefers-reduced-motion: reduce){
     .orb, .status-pill.on .dot{ animation:none !important; }
@@ -287,7 +214,6 @@
   </div>
 
   <div class="heading">
-    <div class="eyebrow"></div>
     <h1>Monitoring <span>Ruangan</span></h1>
   </div>
 
@@ -373,7 +299,6 @@
   const kelEl   = document.getElementById('kelembapan');
   const tempTag = document.getElementById('tempStatusTag');
   const humTag  = document.getElementById('humStatusTag');
-  const lastUpdate = document.getElementById('lastUpdate');
   const body = document.body;
 
   function setStatus(mode, text){
@@ -402,10 +327,6 @@
     requestAnimationFrame(step);
   }
 
-  function nowStr(){
-    return new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
-  }
-
   function tempTagFor(v){
     if (v < 20) return {t:'Sejuk', c:'#57d9e8'};
     if (v < 28) return {t:'Nyaman', c:'#5ee3a3'};
@@ -419,7 +340,6 @@
   }
 
   function applySkyMood(temp){
-    // subtle background shift toward warm or cool depending on live temperature
     const warm = Math.max(0, Math.min(1, (temp - 18) / 16));
     const g1 = `radial-gradient(ellipse 900px 600px at 15% -10%, rgba(255,169,77,${0.06 + warm*0.10}), transparent 60%)`;
     const g2 = `radial-gradient(ellipse 900px 700px at 110% 10%, rgba(87,217,232,${0.16 - warm*0.10}), transparent 60%)`;
@@ -448,7 +368,6 @@
         const info = tempTagFor(suhu);
         tempTag.textContent = info.t;
         tempTag.style.color = info.c;
-        tempTime.textContent = nowStr();
         applySkyMood(suhu);
       }
       if(!isNaN(kelembapan)){
@@ -457,9 +376,7 @@
         const info = humTagFor(kelembapan);
         humTag.textContent = info.t;
         humTag.style.color = info.c;
-        humTime.textContent = nowStr();
       }
-      lastUpdate.textContent = nowStr();
     }catch(e){
       console.error("Payload tidak valid:", e);
     }
